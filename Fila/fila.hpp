@@ -30,23 +30,27 @@ struct Fila
     //redimensionar fica aqui.
     bool enfilar(T e)
     {
-        if (inicio==-1)// Vazia
-        {
-            /*if (redimensionar(tam_v * 2))
-            {
-                return true;
-            }
-            **/
-          return vazia();
-        }
-        if (fim+1 == inicio   ||   fim+1 == tam_v && inicio == 0  )//Cheia 
-        {
-            return true;
-        }
-        if (vazia())
-        {
-            ++inicio;
-        }
+		if (fim == inicio || (fim == tam_v && inicio == 0))//Cheia 
+		{
+			return true;
+		}
+
+		if (vazia())
+		{
+			++inicio;
+		}
+		if (inicio == -1)// Vazia
+		{
+			/*if (redimensionar(tam_v * 2))
+			{
+				return true;
+			}
+			**/
+			return vazia();
+		}
+		
+     
+        
         if (fim == tam_v) fim = 0;
         
         v[fim] = e;
@@ -57,13 +61,29 @@ struct Fila
         return false;
     }
 
+	T printar(bool Index) { //return v[inicio]; 
+    if (Index == true){    return inicio;}
+
+    if (Index == false){ return fim;}
+
+    }
+
     // Pilha
-    T Primeiro() { return v[inicio]; }
+    
     // Pré-Condição: Pilha não vazia.
     bool desenfilar()
     {
-        --ult;
-        if (!vazia() && 4 * (ult + 1) <= tam_v)
+    
+		if (inicio != fim) {
+			++inicio;
+		}
+		if (inicio == tam_v && inicio == fim ) {
+			inicio = -1;
+			fim = 0;
+		}
+
+		
+        if (!vazia() && 4 * (fim + 1) <= tam_v)
         {
            /* if (redimensionar(tam_v / 2))
             {
