@@ -1,0 +1,2 @@
+g++ main.cpp -o teste -Wall -Wextra -std=c++17 -pedantic
+.\teste
