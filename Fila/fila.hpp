@@ -6,7 +6,7 @@ struct Fila
 {
 	T* v;
 	T* w;
-	int inicio, fim, tam_v = 2, tam_w;
+	int inicio, fim, tam_v = 4, tam_w;
 
 	bool inicializar()
 	{
@@ -73,18 +73,20 @@ struct Fila
 	// Pré-Condição: Pilha não vazia.
 	bool desenfilar()
 	{
-
-		if (inicio != fim) {
+		if (vazia()){
+				cout << "Fila vazia"<< endl;
+		} else{
+			if (inicio+1 == fim){
+				 inicio = -1;
+				 fim = 0;
+				cout << "Fila vazia"<< endl;
+			 }else{
 			++inicio;
+			}
+			 if (inicio == tam_v) inicio = 0;
+			 
 		}
-		if (inicio == tam_v && inicio == fim) {
-			inicio = -1;
-			fim = 0;
-		}
-		if (inicio == tam_v && fim != 0) {
-			inicio = 0;
-		}
-
+	
 
 		if (!vazia() && 4 * (fim + 1) <= tam_v)
 		{
