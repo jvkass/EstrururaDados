@@ -1,158 +1,72 @@
+#include <iostream>
 #include <new>
-using std::nothrow;
+using namespace std;
 
 template <typename T>
-
-struct Deque
-{
-	T* v;
-	T* w;
-	int esquerda, direita, tam_v = 1, tam_w, quant,auxRetorno;
-
-	bool inicializar()
-	{
-		v = new (nothrow) T[tam_v];
-		if (v == nullptr)
-			return true;
-		esquerda = -2;
-		direita = -2;
-		quant=0;
-		//tam_v = 1;
-		return false;
-	}
-
-    	void terminar()
-	{
-		delete[] v;
-	}
-
-    	bool vazia()
-	{
-		return (quant==0);
-	}
-
-		bool cheia()
-	{
-		return (quant==tam_v);
-	}
-
-    bool inserir_esq (T e){
-        	
-		if (vazia()){
-			if (tam_v==1){
-			esquerda=0;
-			direita=0;
-			}
-			v[esquerda] = e;
-			++quant;
-			return false;
-		}
-
-		if (cheia()){
-			if (redimensionar(tam_v * 2))
-			{
-				return true;
-			}
-			return true;
-		}
-		if (esquerda-1==-1){
-		if (!redimensionar(tam_v * 2)){
-			return true;
-		}	
-
-		}
-		--esquerda;
-		v[esquerda] = e;
-		++quant;
-		return false;
-
-    }
-
-    bool inserir_dir (T e){
-
-		if (vazia()) {
-			if (tam_v == 1) {
-				esquerda = 0;
-				direita = 0;
-			}
-			v[direita] = e;
-			++quant;
-			return false;
-		}
-
-		if (cheia()) {
-			if (redimensionar(tam_v * 2))
-			{
-				return true;
-			}
-			return true;
-		}
-		if (direita + 1 == tam_v) {
-			if (!redimensionar(tam_v * 2)) {
-				return true;
-			}
-
-		}
-		++direita;
-		v[direita] = e;
-		++quant;
-		return false;
-
-    }
-
-	T remover_esq() { //remover lado esquerdo e retorna no console
-		if (vazia()) {
-			return true;
-		}
-		else {
-			auxRetorno = v[esquerda];
-			if (esquerda != direita){
-			++esquerda;
-			}
-			--quant;
-			return auxRetorno;
-		}
-	}
-
-	T remover_dir() { //remover lado direito e retorna no console
-		if (vazia()) {
-			return false;
-		}
-		else {
-			auxRetorno = v[direita];
-			if (esquerda!=direita){
-			--direita;
-			}
-			--quant;
-			return auxRetorno;
-		}
-	}
-
-
-	bool redimensionar(int tam_w)
-	{
-		T *w = new (nothrow) T[tam_w];
-		if (w == nullptr){
-			return true;
-			}
-		
-		esquerda = (tam_w-quant)/2	;
-		direita = (esquerda+quant)-1;
-		for (int i = 0; i < quant; i++)
-		{
-			w[i+esquerda] = v[i];
-		}
-		delete[] v;
-		v = w;
-		tam_v = tam_w;
-		return false;
-	}
-
-
-		T printar(int Index) { //Printar no console 
-		if (Index == 1) { return esquerda; }
-
-		if (Index == 2) { return direita; }
-		if (Index == 3) { return quant; }
-	}
+struct Deque {
+    T *v;
+    int left, right, size, elements;
 };
+
+template <typename T>
+bool inicializar (Deque<T> &D) {
+    D.v = new(nothrow) T [1];
+    if( D.v == nullptr ) return true;
+    D.right = 0;
+    D.left = 0;
+    D.size = 1;
+    D.elements = 0;
+    return false;
+}
+
+template <typename T> 
+void terminar (Deque<T> &D) { delete [] D.v; }
+
+template <typename T> 
+bool vazio (Deque<T> &D) { return (D.elements == 0); }
+
+template <typename T>
+bool redimensionar (Deque<T> &D, int newSize) {
+    T* w = new(nothrow) T [newSize];
+    if (w == nullptr) return true;
+    int oldLeft = D.left;
+    D.left = (newSize - D.elements)/2;
+    D.right = D.left + D.elements -1;
+    for (int i = D.left; i <= D.right; i += 1) {
+        w[i] = (D.v)[oldLeft];
+        oldLeft++;
+    }
+    delete [] (D.v); (D.v) = w;
+    D.size = newSize;
+    return false;
+}
+
+template <typename T>
+bool inserir_esq (Deque<T> &D, T e) {
+    if (D.left == 0) { if (redimensionar(D, D.size*2)) return true; }
+    D.left--; D.elements++;
+    (D.v)[D.left] = e;
+    return false;
+}
+
+template <typename T>
+bool inserir_dir (Deque<T> &D, T e) {
+    if (D.right == D.size-1) { if (redimensionar(D, D.size*2)) return true; }
+    D.right++; D.elements++;
+    D.v[D.right] = e;
+    return false;
+}
+
+template <typename T>
+T remover_esq (Deque<T> &D) {
+    T value = D.v[D.left];
+    D.left++; D.elements--;
+    return value;
+}
+
+template <typename T>
+T remover_dir (Deque<T> &D) {
+    T value = D.v[D.right];
+    D.right--; D.elements--;
+    return value;
+}

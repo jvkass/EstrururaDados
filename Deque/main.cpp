@@ -8,7 +8,7 @@ using std::endl;
 int main()
 {
 	Deque<int> D;
-	if (D.inicializar())
+	if (inicializar(D))
 		return 1;
 
 
@@ -21,28 +21,28 @@ int main()
 		cin >> escolha;
 		if (escolha == 1)
 		{
-			if (D.inserir_esq(5))
+			if (inserir_esq(D,5))
 			{
-				cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << endl;
+				cout << D.left << " " << D.right << " " << D.elements << " " << endl;
 				cout << "Deque cheio ou Redimensionado" << endl;
 			}
-			else { cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << endl; }
+			else { cout << D.left << " " << D.right << " " << D.elements << " " << endl; }
 		}
 		if (escolha == 2)
 		{
 
-			if (D.inserir_dir(4))
+			if (inserir_dir(D,4))
 			{
-				cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << endl;
+				cout << D.left << " " << D.right << " " << D.elements << " " << endl;
 				cout << "Deque cheio ou Redimensionado" << endl;
 			}
-			else { cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << endl; }
+			else { cout << D.left << " " << D.right << " " << D.elements << " " << endl; }
 		}
 		if (escolha == 3)
 		{
 
 			
-				cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << " "<<  D.remover_esq() << endl;
+				cout << D.left << " " << D.right << " " << D.elements << " " << remover_esq(D) << endl;
 				//cout << "Deque vazio" << endl;
 		
 		}
@@ -50,7 +50,7 @@ int main()
 		{
 
 			
-				cout << D.printar(1) << " " << D.printar(2) << " " << D.printar(3) << " " << D.remover_dir() << endl;
+				cout << D.left << " " << D.right << " " << D.elements << " " << remover_dir(D) << endl;
 				//cout << "Deque vazio" << endl;
 			}
 		if (escolha == 0) {
